@@ -6,7 +6,7 @@
 #include <windows.h>
 #include <algorithm>
 #include <cstdio>
-#include "KsiazkaAdresowaObiektowo.h"
+#include "User.h"
 
 using namespace std;
 
@@ -65,8 +65,7 @@ int loadIntegerNumber()
 }
 
 
-
-void enterNewAddressDetails(vector <AdressData> &dataOfTheAddressee, int idUser, int &idOfLastAddressee)
+void enterNewAddressDetails(vector <AdressData> &dataOfTheAddressee, int logUserId, int &idOfLastAddressee)
 {
     AdressData dataOfAddressee;
     if(!dataOfTheAddressee.empty())
@@ -88,7 +87,7 @@ void enterNewAddressDetails(vector <AdressData> &dataOfTheAddressee, int idUser,
         idOfLastAddressee=dataOfAddressee.idOfAdressee;
     }
 
-    dataOfAddressee.idOfUser = idUser;
+    dataOfAddressee.idOfUser = logUserId;
     cout<<"Podaj imie adresata: ";
     dataOfAddressee.name = loadLineOfText();
     cout<<"Podaj nazwisko adresata: ";
@@ -203,7 +202,7 @@ void saveAddresseesViaTempTxtFile(vector<AdressData> &AddresseeList, int id, int
     rename("Adresaci_tymczasowy.txt", "Adresaci.txt");
 }
 
-void readFromTxtFile(vector<AdressData> &writeToAddresseeList, int idUser, int &idOfLastAddresse)
+void readFromTxtFile(vector<AdressData> &writeToAddresseeList, int logUserId, int &idOfLastAddresse)
 {
     AdressData dataOfAddresseeFromTxtFile;
 
@@ -264,7 +263,7 @@ void readFromTxtFile(vector<AdressData> &writeToAddresseeList, int idUser, int &
         if(numberOfTheLineInTxtFile==8)
         {
             numberOfTheLineInTxtFile=1;
-            if(dataOfAddresseeFromTxtFile.idOfUser==idUser)
+            if(dataOfAddresseeFromTxtFile.idOfUser==logUserId)
             {
                 writeToAddresseeList.push_back(dataOfAddresseeFromTxtFile);
             }
@@ -325,7 +324,7 @@ void searchTheAddresseeBySurname(vector<AdressData> &AddresseeList)
     loadSign();
 }
 
-bool editAddressee(vector<AdressData> &AddresseeList, int &id, int idUser)
+bool editAddressee(vector<AdressData> &AddresseeList, int &id, int logUserId)
 {
     bool operationOnAddressee=false;
     cout<<"Podaj id adresata: ";
@@ -337,7 +336,7 @@ bool editAddressee(vector<AdressData> &AddresseeList, int &id, int idUser)
 
     for(vector<AdressData>::iterator  itr = AddresseeList.begin(), endVectorWord=AddresseeList.end(); itr!=endVectorWord; itr++)
     {
-        if(itr->idOfAdressee==id&&itr->idOfUser==idUser)
+        if(itr->idOfAdressee==id&&itr->idOfUser==logUserId)
         {
             char menuItem='0';
 
@@ -458,7 +457,7 @@ void printingTheVector(vector<AdressData> printedVector)
     loadSign();
 }
 
-bool eraseAdressee(vector<AdressData> &vectorOfDeleteAddresses, int &id, int idUser)
+bool eraseAdressee(vector<AdressData> &vectorOfDeleteAddresses, int &id, int logUserId)
 {
     bool operationOnAddressee=false;
     cout<<"Podaj id adresata: ";
@@ -470,7 +469,7 @@ bool eraseAdressee(vector<AdressData> &vectorOfDeleteAddresses, int &id, int idU
 
     for(vector<AdressData>::iterator endVectorWord=vectorOfDeleteAddresses.end(); itr!=endVectorWord; itr++)
     {
-        if(itr->idOfAdressee==id&&itr->idOfUser==idUser)
+        if(itr->idOfAdressee==id&&itr->idOfUser==logUserId)
         {
             cout<<"Numer id adresata: "<<itr->idOfAdressee<<endl;
             cout<<"Imie adresata: "<<itr->name<<endl;
@@ -507,10 +506,10 @@ int main()
 {
     User user;
     vector<AdressData> listOfAddresse;
-    vector<User> users;
+
     int id=0;
     int idOfLastAddresse=0;
-    int idUser=0;
+    int logUserId=user.getLoggedUserId();
     bool resultOperation=false;
 
     char wybor;
@@ -518,11 +517,11 @@ int main()
 
     string surname, name;
 
-    user.readUsersFromTxtFile(users);
+    user.readUsersFromTxtFile();
 
     while(1)
     {
-        if(idUser==0)
+        if(logUserId==0)
         {
             system("cls");
             cout << "1. Rejestracja" << endl;
@@ -532,13 +531,14 @@ int main()
 
             if(wybor == '1')
             {
-                user.userRegistration(users);
-                user.saveUsersToTxtFile(users);
+                user.userRegistration();
+                user.saveUsersToTxtFile();
             }
             else if(wybor == '2')
             {
-                idUser = user.logging(users);
-                readFromTxtFile(listOfAddresse,idUser,idOfLastAddresse);
+                user.logging();
+                logUserId=user.getLoggedUserId();
+                readFromTxtFile(listOfAddresse,logUserId,idOfLastAddresse);
             }
             else if(wybor == '9')
             {
@@ -571,7 +571,7 @@ int main()
 
             case '1':
             {
-                enterNewAddressDetails(listOfAddresse,idUser,idOfLastAddresse);
+                enterNewAddressDetails(listOfAddresse,logUserId,idOfLastAddresse);
                 saveAddedAddresseeToTxtFile(listOfAddresse);
                 menuItemSelection = '0';
             }
@@ -601,7 +601,7 @@ int main()
             case '5':
             {
                 displayAdresseesId(listOfAddresse);
-                resultOperation=eraseAdressee(listOfAddresse,id,idUser);
+                resultOperation=eraseAdressee(listOfAddresse,id,logUserId);
                 if(resultOperation==true)
                     saveAddresseesViaTempTxtFile(listOfAddresse,id,idOfLastAddresse);
                 menuItemSelection = '0';
@@ -611,7 +611,7 @@ int main()
             case '6':
             {
                 displayAdresseesId(listOfAddresse);
-                resultOperation=editAddressee(listOfAddresse,id,idUser);
+                resultOperation=editAddressee(listOfAddresse,id,logUserId);
                 if(resultOperation==true)
                     saveAddresseesViaTempTxtFile(listOfAddresse,id,idOfLastAddresse);
                 menuItemSelection = '0';
@@ -620,8 +620,8 @@ int main()
 
             case '7':
             {
-                user.passwordChange(users,idUser);
-                user.saveUsersToTxtFile(users);
+                user.passwordChange();
+                user.saveUsersToTxtFile();
                 menuItemSelection = '0';
             }
             break;
@@ -630,7 +630,7 @@ int main()
             {
                 listOfAddresse.clear();
                 menuItemSelection = '0';
-                idUser = 0;
+                logUserId = 0;
             }
             break;
 
@@ -638,7 +638,7 @@ int main()
             {
                 cout<<"Wybierz poprawna opcje menu wpisujac poprawna liczbe oraz potwierdzajac klawisz ENTER!";
                 Sleep(2000);
-                idUser = 0;
+                logUserId = 0;
             }
             break;
 
