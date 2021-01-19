@@ -112,25 +112,6 @@ void User::passwordChange()
     }
 }
 
-void User::enterTheUsersDetails()
-{
-    User dataOfUser;
-    if(!users.empty())
-        dataOfUser = users.back();
-    else
-        dataOfUser.idOfUser=0;
-
-    dataOfUser.idOfUser = dataOfUser.idOfUser + 1;
-    cout<<"Podaj nazwie uzytkownika: ";
-    dataOfUser.userName = loadLineOfText();
-    cout<<"Podaj haslo uzytkownika: ";
-    dataOfUser.password = loadLineOfText();
-
-    users.push_back(dataOfUser);
-    cout<<"User zostal utworzony."<<endl;
-    Sleep(1500);
-}
-
 void User::saveUsersToTxtFile()
 {
     fstream fileUsers;
@@ -197,3 +178,5 @@ void User::readUsersFromTxtFile()
     }
     fileUsers.close();
 }
+
+

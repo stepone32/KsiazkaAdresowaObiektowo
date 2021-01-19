@@ -7,6 +7,8 @@
 #include <algorithm>
 #include <cstdio>
 #include "User.h"
+#include "UsersDataFile.h"
+
 
 using namespace std;
 
@@ -169,18 +171,22 @@ void saveAddresseesViaTempTxtFile(vector<AdressData> &AddresseeList, int id, int
             if(numberOfTheLineInTxtFile==8)
             {
                 numberOfTheLineInTxtFile=1;
-                if(dataOfAddresseeFromTxtFile.idOfAdressee==itr->idOfAdressee&&itr->idOfAdressee!=id)
+                if((dataOfAddresseeFromTxtFile.idOfAdressee==itr->idOfAdressee)&&(itr->idOfAdressee!=id)&&(itr->idOfAdressee!=idOfLastAddresse))
                 {
                     tempListOfAddresse.push_back(*itr);
                 }
-                if(dataOfAddresseeFromTxtFile.idOfAdressee!=itr->idOfAdressee&&dataOfAddresseeFromTxtFile.idOfAdressee!=id)
+                if((dataOfAddresseeFromTxtFile.idOfAdressee!=itr->idOfAdressee)&&(dataOfAddresseeFromTxtFile.idOfAdressee!=id)&&(dataOfAddresseeFromTxtFile.idOfAdressee!=idOfLastAddresse))
                 {
                     tempListOfAddresse.push_back(dataOfAddresseeFromTxtFile);
                 }
             }
         }
 
-        if(itr->idOfAdressee==id)
+        if((itr->idOfAdressee==id))
+        {
+            tempListOfAddresse.push_back(*itr);
+
+        }else if(!(dataOfAddresseeFromTxtFile.idOfAdressee==idOfLastAddresse)&&(itr->idOfAdressee==idOfLastAddresse)&&(itr->idOfAdressee!=id))
         {
             tempListOfAddresse.push_back(*itr);
         }
@@ -505,6 +511,7 @@ bool eraseAdressee(vector<AdressData> &vectorOfDeleteAddresses, int &id, int log
 int main()
 {
     User user;
+    //UsersDataFile userData;
     vector<AdressData> listOfAddresse;
 
     int id=0;
@@ -572,7 +579,7 @@ int main()
             case '1':
             {
                 enterNewAddressDetails(listOfAddresse,logUserId,idOfLastAddresse);
-                saveAddedAddresseeToTxtFile(listOfAddresse);
+                saveAddresseesViaTempTxtFile(listOfAddresse,id,idOfLastAddresse);
                 menuItemSelection = '0';
             }
             break;

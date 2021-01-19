@@ -1,0 +1,58 @@
+# depslib dependency file v1.0
+1611044400 source:c:\lenovobezpolskich\ksiazkaadresowaobiektowo\main.cpp
+	<iostream>
+	<vector>
+	<iterator>
+	<fstream>
+	<sstream>
+	<windows.h>
+	<algorithm>
+	<cstdio>
+	"User.h"
+	"UsersDataFile.h"
+
+1608071674 source:c:\lenovobezpolskich\ksiazkaadresowaobiektowo\ksiazkaadresowaobiektowo.cpp
+	<iostream>
+	<vector>
+	<iterator>
+	<fstream>
+	<sstream>
+	<windows.h>
+	"KsiazkaAdresowaObiektowo.h"
+
+1608071656 c:\lenovobezpolskich\ksiazkaadresowaobiektowo\ksiazkaadresowaobiektowo.h
+	<iostream>
+	<vector>
+	<iterator>
+	<fstream>
+	<sstream>
+
+1611044308 c:\lenovobezpolskich\ksiazkaadresowaobiektowo\user.h
+	<iostream>
+	<vector>
+	<iterator>
+	<fstream>
+	<sstream>
+	<windows.h>
+
+1611044276 source:c:\lenovobezpolskich\ksiazkaadresowaobiektowo\user.cpp
+	"User.h"
+
+1608153580 source:c:\lenovobezpolskich\ksiazkaadresowaobiektowo\adressdata.cpp
+
+1611044419 source:c:\lenovobezpolskich\ksiazkaadresowaobiektowo\usersdatafile.cpp
+
+1610899093 source:c:\lenovobezpolskich\ksiazkaadresowaobiektowo\datamanage.cpp
+	"DataManage.h"
+
+1610898954 c:\lenovobezpolskich\ksiazkaadresowaobiektowo\datamanage.h
+	<iostream>
+
+1611044367 c:\lenovobezpolskich\ksiazkaadresowaobiektowo\usersdatafile.h
+	<iostream>
+	<vector>
+	<iterator>
+	<fstream>
+	<sstream>
+	<windows.h>
+

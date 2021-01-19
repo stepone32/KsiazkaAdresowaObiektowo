@@ -1,0 +1,5 @@
+2|1|Radoslaw|Wielosz|666333111|radoslaw@pazura.pl|ul. 3 maja 3a, Lodz|
+3|2|Maciej|Drwal|111222888|maciej@drwal.pl|ul. Wesola 1, Krakow|
+4|2|Adam|Woronowicz|333111888|adam@woronowicz.pl|ul. Zakonna 5, Bialystok|
+6|1|Weronika|Lofrano||||
+7|1|Lukasz|Stepien||||

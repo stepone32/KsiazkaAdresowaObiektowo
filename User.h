@@ -13,7 +13,6 @@ class User
     string userName, password;
     vector<User> users;
 
-
 public:
     User(int=0, int=0, string="", string="");
     ~User();
@@ -24,7 +23,6 @@ public:
     void userRegistration();
     int logging();
     void passwordChange();
-    void enterTheUsersDetails();
     void saveUsersToTxtFile();
     void readUsersFromTxtFile();
 

@@ -1,0 +1,6 @@
+1|Lukasz|123|
+2|Ania|4321|
+3|Pawel|2|
+4|Radoslaw|5|
+5|Antek|4|
+6|Wergiliusz|9|
